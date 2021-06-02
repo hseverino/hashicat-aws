@@ -8,14 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region
-  default_tags {
-    tags{
-      Department = "devops"
-      Billable = true
-    }
-  }
-
+  region = var.region
 }
 
 resource "aws_vpc" "hashicat" {
@@ -23,8 +16,10 @@ resource "aws_vpc" "hashicat" {
   enable_dns_hostnames = true
 
   tags = {
-    name = "${var.prefix}-vpc-${var.region}"
+    name        = "${var.prefix}-vpc-${var.region}"
     environment = "Production"
+    Department  = "devops"
+    Billable    = true
   }
 }
 
@@ -33,7 +28,9 @@ resource "aws_subnet" "hashicat" {
   cidr_block = var.subnet_prefix
 
   tags = {
-    name = "${var.prefix}-subnet"
+    name       = "${var.prefix}-subnet"
+    Department = "devops"
+    Billable   = true
   }
 }
 
@@ -72,6 +69,9 @@ resource "aws_security_group" "hashicat" {
   }
 
   tags = {
+    Department = "devops"
+    Billable   = true
+
     Name = "${var.prefix}-security-group"
   }
 }
@@ -85,6 +85,9 @@ resource "aws_internet_gateway" "hashicat" {
   vpc_id = aws_vpc.hashicat.id
 
   tags = {
+    Department = "devops"
+    Billable   = true
+
     Name = "${var.prefix}-internet-gateway"
   }
 }
@@ -139,6 +142,9 @@ resource "aws_instance" "hashicat" {
   vpc_security_group_ids      = [aws_security_group.hashicat.id]
 
   tags = {
+    Department = "devops"
+    Billable   = true
+
     Name = "${var.prefix}-hashicat-instance"
   }
 }
