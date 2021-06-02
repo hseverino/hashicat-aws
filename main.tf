@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "=3.42.0"
     }
+  default_tags {
+    tags{
+      Department = "devops"
+      Billable = true
+    }
   }
 }
 
@@ -29,6 +34,8 @@ resource "aws_subnet" "hashicat" {
 
   tags = {
     name = "${var.prefix}-subnet"
+    Department = "devops"
+    Billable = true
   }
 }
 
@@ -68,6 +75,8 @@ resource "aws_security_group" "hashicat" {
 
   tags = {
     Name = "${var.prefix}-security-group"
+    Department = "devops"
+    Billable = true
   }
 }
 
@@ -81,6 +90,8 @@ resource "aws_internet_gateway" "hashicat" {
 
   tags = {
     Name = "${var.prefix}-internet-gateway"
+    Department = "devops"
+    Billable = true
   }
 }
 
@@ -135,6 +146,8 @@ resource "aws_instance" "hashicat" {
 
   tags = {
     Name = "${var.prefix}-hashicat-instance"
+    Department = "devops"
+    Billable = true
   }
 }
 
